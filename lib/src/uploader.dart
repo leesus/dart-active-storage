@@ -50,7 +50,7 @@ class Uploader {
         return chunk;
       }));
       HttpClientResponse response = await request.close();
-      if (response.statusCode != 200) {
+      if (response.statusCode < 200 || response.statusCode >= 300) {
         String responseText = '';
         await for (String textChunk in utf8.decoder.bind(response)) {
           responseText += textChunk;
@@ -85,7 +85,7 @@ class Uploader {
     try {
       String responseBody = utf8.decode(response.bodyBytes);
       String requestBody = request.body;
-      if (code != 200) {
+      if (code < 200 || code >= 300) {
         _throwHttpException(
           method,
           url,
