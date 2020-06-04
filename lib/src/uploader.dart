@@ -42,6 +42,7 @@ class Uploader {
       directUploadResponse.headers.forEach((name, value) {
         request.headers.set(name, value);
       });
+      request.headers.set('Content-Length', byteSize);
       int uploaded = 0;
       await request.addStream(fileContents.map((chunk) {
         uploaded += chunk.length;
